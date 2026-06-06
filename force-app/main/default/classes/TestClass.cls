@@ -2,7 +2,7 @@ public with sharing class TestClass {
     private String name;
 
     public TestClass() {
-        this('name');
+        this('Bob');
     }
 
     public TestClass(String name) {
