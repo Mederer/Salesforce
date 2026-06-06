@@ -1,0 +1,38 @@
+name: Salesforce Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 'Production'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Salesforce CLI
+        run: npm install -g @salesforce/cli
+
+      - name: Authenticate to Salesforce
+        run: |
+          echo "${{ secrets.SF_JWT_KEY }}" > server.key
+          sf org login jwt \
+            --client-id "${{ secrets.SF_CONSUMER_KEY }}" \
+            --jwt-key-file server.key \
+            --username "${{ secrets.SF_USERNAME }}" \
+            --instance-url "${{ secrets.SF_INSTANCE_URL }}" \
+            --alias target-org
+          rm server.key
+
+      - name: Deploy
+        run: |
+          sf project deploy start \
+            --target-org target-org \
+            --source-dir force-app \
+            --test-level RunLocalTests \
+            --wait 30
