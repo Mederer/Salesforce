@@ -12,4 +12,14 @@ package.xml
 **/__tests__/**
 
 node_modules/
+
+# Manual ignores
 force-app/main/default/appMenus/AppSwitcher.appMenu-meta.xml
+force-app/main/default/permissionsets/SDO_Tooling_Access.permissionset-meta.xml
+force-app/main/default/permissionsets/sfdcInternalInt__sfdc_accelerate_dms.permissionset-meta.xml
+force-app/main/default/permissionsetgroups/force__SalesManagementUserPsg.permissionsetgroup-meta.xml
+force-app/main/default/permissionsetgroups/force__SalesManagementUserPsg.permissionsetgroup-meta.xml
+force-app/main/default/permissionsetgroups/force__SalesManagementAgentUserPsg.permissionsetgroup-meta.xml
+force-app/main/default/profiles/Admin.profile-meta.xml
+force-app/main/default/profiles/B2B Reordering Portal Buyer Profile.profile-meta.xml
+force-app/main/default/profiles/Salesforce API Only System Integrations.profile-meta.xml
