@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Technology</fullName>
+        <default>false</default>
+        <label>Technology</label>
+    </customValue>
+    <customValue>
+        <fullName>Leadership</fullName>
+        <default>false</default>
+        <label>Leadership</label>
+    </customValue>
+    <customValue>
+        <fullName>Compliance</fullName>
+        <default>false</default>
+        <label>Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>Finance</fullName>
+        <default>false</default>
+        <label>Finance</label>
+    </customValue>
+    <customValue>
+        <fullName>Soft Skills</fullName>
+        <default>false</default>
+        <label>Soft Skills</label>
+    </customValue>
+    <masterLabel>Course &amp; Subject Categories</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
