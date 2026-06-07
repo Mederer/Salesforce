@@ -9,16 +9,14 @@ on:
       - main
 
 jobs:
-  test:
+  validate:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    environment: 'Production'
-
+    environment: Production
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # required for git delta to see commit history
+          fetch-depth: 0
 
       - name: Install Salesforce CLI
         run: npm install -g @salesforce/cli
@@ -26,45 +24,50 @@ jobs:
       - name: Install sfdx-git-delta
         run: echo 'y' | sf plugins install sfdx-git-delta
 
-      - name: Authenticate to Salesforce
+      - name: Write JWT key
+        run: echo "${{ secrets.SF_JWT_KEY }}" > server.key
+
+      - name: Authenticate to Production
         run: |
-          echo "${{ secrets.SF_JWT_KEY }}" > server.key
           sf org login jwt \
             --client-id "${{ secrets.SF_CONSUMER_KEY }}" \
             --jwt-key-file server.key \
             --username "${{ secrets.SF_USERNAME }}" \
             --instance-url "${{ secrets.SF_INSTANCE_URL }}" \
-            --alias target-org
-          rm server.key
+            --alias prod-org
 
-      - name: Generate delta package
+      - name: Remove JWT key
+        if: always()
+        run: rm -f server.key
+
+      - name: Generate delta
         run: |
           mkdir -p delta
           sf sgd source delta \
             --to HEAD \
-            --from HEAD~1 \
+            --from origin/main \
             --output delta \
             --generate-delta \
             --source-dir force-app
 
-      - name: Run Apex Tests
+      - name: Validate delta (check-only)
         run: |
-          sf apex run test \
-            --target-org target-org \
-            --test-level RunSpecifiedTests \
-            --tests TestUnitTest \
-            --wait 20
+          sf project deploy start \
+            --target-org prod-org \
+            --manifest delta/package/package.xml \
+            --post-destructive-changes delta/destructiveChanges/destructiveChanges.xml \
+            --test-level RunLocalTests \
+            --dry-run \
+            --wait 30
 
   deploy:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    environment: 'Production'
-
+    environment: Production
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # required for git delta to see commit history
+          fetch-depth: 0
 
       - name: Install Salesforce CLI
         run: npm install -g @salesforce/cli
@@ -72,23 +75,28 @@ jobs:
       - name: Install sfdx-git-delta
         run: echo 'y' | sf plugins install sfdx-git-delta
 
-      - name: Authenticate to Salesforce
+      - name: Write JWT key
+        run: echo "${{ secrets.SF_JWT_KEY }}" > server.key
+
+      - name: Authenticate to Production
         run: |
-          echo "${{ secrets.SF_JWT_KEY }}" > server.key
           sf org login jwt \
             --client-id "${{ secrets.SF_CONSUMER_KEY }}" \
             --jwt-key-file server.key \
             --username "${{ secrets.SF_USERNAME }}" \
             --instance-url "${{ secrets.SF_INSTANCE_URL }}" \
-            --alias target-org
-          rm server.key
+            --alias prod-org
 
-      - name: Generate delta package
+      - name: Remove JWT key
+        if: always()
+        run: rm -f server.key
+
+      - name: Generate delta
         run: |
           mkdir -p delta
           sf sgd source delta \
             --to HEAD \
-            --from HEAD~1 \
+            --from origin/main~1 \
             --output delta \
             --generate-delta \
             --source-dir force-app
@@ -96,9 +104,8 @@ jobs:
       - name: Deploy delta
         run: |
           sf project deploy start \
-            --target-org target-org \
+            --target-org prod-org \
             --manifest delta/package/package.xml \
             --post-destructive-changes delta/destructiveChanges/destructiveChanges.xml \
-            --test-level RunSpecifiedTests \
-            --tests TestUnitTest \
+            --test-level RunLocalTests \
             --wait 30
