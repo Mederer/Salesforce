@@ -25,5 +25,6 @@ private class TestUnitTest {
     @isTest
     static void myUnitTest() {
         Assert.areEqual(1, 1);
+        Assert.areEqual(1, 1);
     }
 }
