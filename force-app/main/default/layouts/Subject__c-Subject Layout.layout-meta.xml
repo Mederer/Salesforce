@@ -53,7 +53,7 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Course_Subject__c.Course__c</relatedList>
+        <relatedList>Course_Subject__c.Subject__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
