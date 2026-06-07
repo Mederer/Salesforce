@@ -155,8 +155,9 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Course Subject</label>
     <nameField>
+        <displayFormat>CoSu-{0000}</displayFormat>
         <label>Course Subject Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Course Subjects</pluralLabel>
     <searchLayouts></searchLayouts>

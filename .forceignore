@@ -12,4 +12,4 @@ package.xml
 **/__tests__/**
 
 node_modules/
-force-app\main\default\appMenus\AppSwitcher.appMenu-meta.xml
+force-app/main/default/appMenus/AppSwitcher.appMenu-meta.xml
