@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>System Admin Permission Set Group</label>
+    <permissionSets>EduDemon_Admin_Permission_Set</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
