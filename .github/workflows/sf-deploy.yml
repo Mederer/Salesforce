@@ -45,7 +45,7 @@ jobs:
           mkdir -p delta
           sf sgd source delta \
             --to HEAD \
-            --from origin/main \
+            --from $(git rev-parse last-deployed) \
             --output delta \
             --generate-delta \
             --source-dir force-app
