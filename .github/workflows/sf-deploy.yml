@@ -45,7 +45,7 @@ jobs:
           mkdir -p delta
           sf sgd source delta \
             --to HEAD \
-            --from origin/main \
+            --from $(git rev-parse last-deployed) \
             --output delta \
             --generate-delta \
             --source-dir force-app
@@ -68,6 +68,8 @@ jobs:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: Production
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -100,7 +102,7 @@ jobs:
           mkdir -p delta
           sf sgd source delta \
             --to HEAD \
-            --from origin/main \
+            --from $(git rev-parse last-deployed) \
             --output delta \
             --generate-delta \
             --source-dir force-app
@@ -117,3 +119,9 @@ jobs:
             $DESTRUCTIVE \
             --test-level RunLocalTests \
             --wait 30
+
+      - name: Advance last-deployed tag
+        if: success()
+        run: |
+          git tag -f last-deployed HEAD
+          git push origin last-deployed --force
