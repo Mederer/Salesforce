@@ -100,7 +100,7 @@ jobs:
           mkdir -p delta
           sf sgd source delta \
             --to HEAD \
-            --from origin/main \
+            --from origin/main~1 \
             --output delta \
             --generate-delta \
             --source-dir force-app
