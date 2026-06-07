@@ -52,10 +52,14 @@ jobs:
 
       - name: Validate delta (check-only)
         run: |
+          DESTRUCTIVE=""
+          if [ -f delta/destructiveChanges/destructiveChanges.xml ]; then
+            DESTRUCTIVE="--post-destructive-changes delta/destructiveChanges/destructiveChanges.xml"
+          fi
           sf project deploy start \
             --target-org prod-org \
             --manifest delta/package/package.xml \
-            --post-destructive-changes delta/destructiveChanges/destructiveChanges.xml \
+            $DESTRUCTIVE \
             --test-level RunLocalTests \
             --dry-run \
             --wait 30
@@ -96,16 +100,20 @@ jobs:
           mkdir -p delta
           sf sgd source delta \
             --to HEAD \
-            --from origin/main~1 \
+            --from origin/main \
             --output delta \
             --generate-delta \
             --source-dir force-app
 
       - name: Deploy delta
         run: |
+          DESTRUCTIVE=""
+          if [ -f delta/destructiveChanges/destructiveChanges.xml ]; then
+            DESTRUCTIVE="--post-destructive-changes delta/destructiveChanges/destructiveChanges.xml"
+          fi
           sf project deploy start \
             --target-org prod-org \
             --manifest delta/package/package.xml \
-            --post-destructive-changes delta/destructiveChanges/destructiveChanges.xml \
+            $DESTRUCTIVE \
             --test-level RunLocalTests \
             --wait 30
