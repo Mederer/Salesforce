@@ -36,6 +36,24 @@
         <type>Flexipage</type>
         <pageOrSobjectType>Subject__c</pageOrSobjectType>
     </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>EduDemon_Course_Session_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Course_Session__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>EduDemon_Course_Session_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Course_Session__c</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#009FAE</headerColor>
         <logo>EduDemon_Mascot1</logo>

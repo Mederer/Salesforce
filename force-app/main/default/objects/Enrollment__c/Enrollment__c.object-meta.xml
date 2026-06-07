@@ -155,8 +155,9 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Enrollment</label>
     <nameField>
+        <displayFormat>ENRL-{0000}</displayFormat>
         <label>Enrollment Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Enrollments</pluralLabel>
     <searchLayouts></searchLayouts>

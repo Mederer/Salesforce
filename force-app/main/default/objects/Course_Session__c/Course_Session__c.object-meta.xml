@@ -155,8 +155,9 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Course Session</label>
     <nameField>
+        <displayFormat>CoSe-{0000}</displayFormat>
         <label>Course Session Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Course Sessions</pluralLabel>
     <searchLayouts></searchLayouts>

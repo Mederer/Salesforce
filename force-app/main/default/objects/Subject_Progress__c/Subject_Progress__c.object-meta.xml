@@ -155,8 +155,9 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Subject Progress</label>
     <nameField>
+        <displayFormat>SuPr-{0000}</displayFormat>
         <label>Subject Progress Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Subject Progresses</pluralLabel>
     <searchLayouts></searchLayouts>
