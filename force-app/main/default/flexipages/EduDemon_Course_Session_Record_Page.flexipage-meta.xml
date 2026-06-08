@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -412,6 +412,12 @@
                     <valueList>
                         <valueListItems>
                             <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Contact.CNTC_FIRST_NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Contact.NAME</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
