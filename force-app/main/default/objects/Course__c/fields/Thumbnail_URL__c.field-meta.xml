@@ -3,6 +3,7 @@
     <fullName>Thumbnail_URL__c</fullName>
     <label>Thumbnail URL</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Url</type>
 </CustomField>

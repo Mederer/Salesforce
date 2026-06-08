@@ -1,4 +1,4 @@
-name: Salesforce Deploy
+name: Salesforce CI
 
 on:
   push:
