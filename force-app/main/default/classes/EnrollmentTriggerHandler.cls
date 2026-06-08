@@ -4,10 +4,11 @@ public with sharing class EnrollmentTriggerHandler extends AbstractTriggerHandle
   }
 
   public override void beforeInsert(List<SObject> newList) {
+    EnrollmentService.confirmOrWaitlist(newList);
   }
 
   public override void afterInsert(List<SObject> newList) {
-    EnrollmentService.confirmOrWaitlist(newList);
+    EnrollmentService.createSubjectProgressRecords(newList);
   }
 
   public override void beforeUpdate(
@@ -20,6 +21,17 @@ public with sharing class EnrollmentTriggerHandler extends AbstractTriggerHandle
     List<SObject> newList,
     Map<Id, SObject> oldMap
   ) {
+    List<Enrollment__c> cancelledEnrollments = new List<Enrollment__c>();
+    for (Enrollment__c enrollment : (List<Enrollment__c>) newList) {
+      Enrollment__c oldEnrollment = (Enrollment__c) oldMap.get(enrollment.Id);
+      if (
+        oldEnrollment.Status__c != 'Cancelled' &&
+        enrollment.Status__c == 'Cancelled'
+      ) {
+        cancelledEnrollments.add(enrollment);
+      }
+    }
+    EnrollmentService.promoteWaitlist(cancelledEnrollments);
   }
 
   public override void beforeDelete(List<SObject> oldList) {
