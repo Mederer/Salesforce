@@ -4,10 +4,10 @@ public with sharing class EnrollmentTriggerHandler extends AbstractTriggerHandle
   }
 
   public override void beforeInsert(List<SObject> newList) {
+    EnrollmentService.confirmOrWaitlist(newList);
   }
 
   public override void afterInsert(List<SObject> newList) {
-    EnrollmentService.confirmOrWaitlist(newList);
   }
 
   public override void beforeUpdate(
