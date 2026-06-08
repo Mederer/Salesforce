@@ -1,11 +1,13 @@
-public with sharing class EnrollmentTriggerHandler implements ITriggerHandler {
-    public void beforeInsert(List<SObject> newList) {
-        System.debug(LoggingLevel.INFO, 'Before insert of Enrollment.');
+public with sharing class EnrollmentTriggerHandler extends AbstractTriggerHandler {
+    
+    public override String getHandlerName() {
+        return 'EnrollmentTriggerHandler';
     }
     
-    public void afterInsert(List<SObject> newList) {}
-    public void beforeUpdate(List<SObject> newList, Map<Id, SObject> oldMap) {}
-    public void afterUpdate(List<SObject> newList, Map<Id, SObject> oldMap) {}
-    public void beforeDelete(List<SObject> oldList) {}
-    public void afterDelete(List<SObject> oldList) {}
+    public override void beforeInsert(List<SObject> newList) {}
+    public override void afterInsert(List<SObject> newList) {}
+    public override void beforeUpdate(List<SObject> newList, Map<Id, SObject> oldMap) {}
+    public override void afterUpdate(List<SObject> newList, Map<Id, SObject> oldMap) {}
+    public override void beforeDelete(List<SObject> oldList) {}
+    public override void afterDelete(List<SObject> oldList) {}
 }
