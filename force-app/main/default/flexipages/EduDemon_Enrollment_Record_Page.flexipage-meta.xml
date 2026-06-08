@@ -37,8 +37,8 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Course_Session__r.Course__r.Name</fieldItem>
-                <identifier>RecordCourse_Session_rCourse_rNameField</identifier>
+                <fieldItem>Record.Course_Session__r.Course__c</fieldItem>
+                <identifier>RecordCourse_Session_rCourse_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-abda2048-0c7c-4604-8123-2169b89557e1</name>
