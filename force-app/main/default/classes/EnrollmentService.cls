@@ -1,4 +1,9 @@
 public with sharing class EnrollmentService {
+  public static final String CONFIRMED = 'Confirmed';
+  public static final String WAITLISTED = 'Waitlisted';
+  public static final String CANCELLED = 'Cancelled';
+  public static final String NOT_STARTED = 'Not Started';
+
   public static void confirmOrWaitlist(List<Enrollment__c> enrollments) {
     Set<Id> courseSessionIds = new Set<Id>();
     // Track confirms within this batch to avoid over-confirming
@@ -30,10 +35,10 @@ public with sharing class EnrollmentService {
           : 0;
 
         if (confirmedInDb + confirmedInBatch < maxSeats) {
-          enrollment.Status__c = 'Confirmed';
+          enrollment.Status__c = CONFIRMED;
           batchConfirmedCount.put(session.Id, confirmedInBatch + 1);
         } else {
-          enrollment.Status__c = 'Waitlisted';
+          enrollment.Status__c = WAITLISTED;
         }
       }
     }
@@ -83,7 +88,7 @@ public with sharing class EnrollmentService {
           progress.Enrollment__c = enrollment.Id;
           progress.Course_Subject__c = subject.Id;
           progress.Subject__c = subject.Subject__c;
-          progress.Status__c = 'Not Started';
+          progress.Status__c = NOT_STARTED;
           progressToInsert.add(progress);
         }
       }
@@ -113,7 +118,7 @@ public with sharing class EnrollmentService {
     for (Enrollment__c waitlisted : [
       SELECT Id, Course_Session__c
       FROM Enrollment__c
-      WHERE Course_Session__c IN :sessionIds AND Status__c = 'Waitlisted'
+      WHERE Course_Session__c IN :sessionIds AND Status__c = :WAITLISTED
       ORDER BY CreatedDate DESC
     ]) {
       if (!waitlistBySession.containsKey(waitlisted.Course_Session__c)) {
@@ -143,7 +148,7 @@ public with sharing class EnrollmentService {
       List<Enrollment__c> stack = waitlistBySession.get(session.Id);
       if (confirmed < maxSeats && stack != null && !stack.isEmpty()) {
         Enrollment__c next = stack.remove(0);
-        next.Status__c = 'Confirmed';
+        next.Status__c = CONFIRMED;
         toUpdate.add(next);
       }
     }

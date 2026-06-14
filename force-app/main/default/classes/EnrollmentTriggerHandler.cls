@@ -21,22 +21,29 @@ public with sharing class EnrollmentTriggerHandler extends AbstractTriggerHandle
     List<SObject> newList,
     Map<Id, SObject> oldMap
   ) {
-    List<Enrollment__c> cancelledEnrollments = new List<Enrollment__c>();
-    for (Enrollment__c enrollment : (List<Enrollment__c>) newList) {
-      Enrollment__c oldEnrollment = (Enrollment__c) oldMap.get(enrollment.Id);
-      if (
-        oldEnrollment.Status__c != 'Cancelled' &&
-        enrollment.Status__c == 'Cancelled'
-      ) {
-        cancelledEnrollments.add(enrollment);
-      }
-    }
-    EnrollmentService.promoteWaitlist(cancelledEnrollments);
+    EnrollmentService.promoteWaitlist(getCancelledEnrollments(newList, oldMap));
   }
 
   public override void beforeDelete(List<SObject> oldList) {
   }
 
   public override void afterDelete(List<SObject> oldList) {
+  }
+
+  private List<Enrollment__c> getCancelledEnrollments(
+    List<SObject> newList,
+    Map<Id, SObject> oldMap
+  ) {
+    List<Enrollment__c> cancelledEnrollments = new List<Enrollment__c>();
+    for (Enrollment__c enrollment : (List<Enrollment__c>) newList) {
+      Enrollment__c oldEnrollment = (Enrollment__c) oldMap.get(enrollment.Id);
+      if (
+        oldEnrollment.Status__c != EnrollmentService.CANCELLED &&
+        enrollment.Status__c == EnrollmentService.CANCELLED
+      ) {
+        cancelledEnrollments.add(enrollment);
+      }
+    }
+    return cancelledEnrollments;
   }
 }
